@@ -7,7 +7,7 @@ from PIL import Image
 modes = [
     'heal',         # Drops duplicate frames from the output.
     'keep',         # Keeps a total of 1 instance of a duplicate frames in the output.
-    'explode',     # Drops the duplicate frames from the video output and returns a separate clip for each splice.
+    'explode',      # Drops the duplicate frames from the video output and returns a separate clip for each splice.
 ]
 
 
