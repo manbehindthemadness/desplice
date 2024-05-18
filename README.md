@@ -41,10 +41,11 @@ video_frames = desplice.load_video_to_memory('path_to_your_video.mp4')
 
 # Process the video to deduplicate frames
 result, is_slideshow = desplice.process(video_frames, mode='heal', show=True, show_breaks=True)
-
-# Show the processed video
-desplice.show_video_from_frames(result[0][0])
 ```
+
+If ```show``` is set to ```True``` processing and results will be displayed using ```cv2.imshow()```.
+
+If ```debug``` is set to ```True``` measurements and detections will be returned to console.
 
 ### Example of Different Modes:
 
