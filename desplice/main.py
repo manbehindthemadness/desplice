@@ -34,7 +34,7 @@ class Desplice:
         self.device = device
         if thresholds is None:
             thresholds = self.default_thresholds
-        self.antidupe = Antidupe(limits=thresholds, debug=True, device=self.device)
+        self.antidupe = Antidupe(limits=thresholds, debug=self.debug, device=self.device)
 
     @staticmethod
     def load_video_to_memory(file_path: str) -> list:
@@ -74,7 +74,7 @@ class Desplice:
         video = list()
         images = list()
         first_frame = frames[0]
-        filled_frame = np.full(first_frame.shape, 150, dtype=first_frame.dtype)
+        filled_frame = np.full(first_frame.shape, 0, dtype=first_frame.dtype)
         single = False
         chunk = list()
         for idx, frame in enumerate(frames):
@@ -92,17 +92,23 @@ class Desplice:
                     video.append(frame)
                 if self.show_breaks:
                     video.append(filled_frame)
-            elif is_duplicate:
-                pass
+                if self.debug:
+                    print('----- Duplicates Start')
             elif not is_duplicate:
-                single = False
-                chunk.append(frame)
+                if single:
+                    if self.debug:
+                        print('----- Duplicates End')
+                    single = False
+                else:
+                    chunk.append(frame)
             if self.show:
                 cv2.imshow('pw', frame)
                 cv2.waitKey(1)
             if self.debug:
                 print(is_duplicate)
             frames[idx] = None  # conserve memory.
+        if chunk:
+            video.extend(chunk)
         if self.show:
             cv2.destroyAllWindows()
         result = list(), images
@@ -132,5 +138,4 @@ class Desplice:
             self.show_breaks = True
         frames = self.load_video_to_memory(file_path)
         result = self.deduplicate_frames(frames)
-        # TODO: add some kind of report here...
         return result
