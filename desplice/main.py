@@ -24,7 +24,7 @@ class Desplice:
     default_thresholds = {
         'ih': 0.0,  # Image Hash
         'ssim': 0.1,  # SSIM
-        'cs': 0.025,  # Cosine Similarity
+        'cs': 0.02,  # Cosine Similarity
         'cnn': 0.03,  # CNN
         'dedup': 0.005  # Mobilenet
     }
@@ -106,7 +106,7 @@ class Desplice:
                 cv2.waitKey(1)
             if self.debug:
                 print(is_duplicate)
-            frames[idx] = None  # conserve memory.
+            frames[idx] = None  # Conserve memory.
         if chunk:
             video.extend(chunk)
         if self.show:
@@ -127,7 +127,7 @@ class Desplice:
             self.show_video_from_frames(video)
         return result
 
-    def process(self, file_path: str, mode: modes = 'heal', show: bool = False, show_breaks: bool = False) -> tuple:
+    def process(self, file_path_or_array: [str, list[np.ndarray]], mode: modes = 'heal', show: bool = False, show_breaks: bool = False) -> tuple:
         """
         Process and output video
         """
@@ -135,7 +135,18 @@ class Desplice:
         self.mode = mode
         self.show_breaks = show_breaks
         if self.mode == 'explode':
-            self.show_breaks = True
-        frames = self.load_video_to_memory(file_path)
+            self.show_breaks = True  # We use the breaks to detect the in and out of the clips.
+        if isinstance(file_path_or_array, str):
+            frames = self.load_video_to_memory(file_path_or_array)
+        else:
+            frames = file_path_or_array
         result = self.deduplicate_frames(frames)
-        return result
+        slideshow = False
+        total = 0
+        for element in result[0]:
+            total += len(element)
+        if total <= len(result[1]):
+            slideshow = True
+        if self.debug:
+            print(f"is output a slideshow? {slideshow}")
+        return result, slideshow
