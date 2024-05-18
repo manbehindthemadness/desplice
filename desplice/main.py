@@ -127,7 +127,13 @@ class Desplice:
             self.show_video_from_frames(video)
         return result
 
-    def process(self, file_path_or_array: [str, list[np.ndarray]], mode: modes = 'heal', show: bool = False, show_breaks: bool = False) -> tuple:
+    def process(
+            self,
+            file_path_or_array: [str, list[np.ndarray]],
+            mode: modes = 'heal',
+            show: bool = False,
+            show_breaks: bool = False
+    ) -> tuple:
         """
         Process and output video
         """
