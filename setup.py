@@ -26,7 +26,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='desplice',
-    version='0.0.1',
+    version='0.0.2',
     packages=find_packages(),
     install_requires=install_requires,
     entry_points={
