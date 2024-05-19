@@ -43,6 +43,8 @@ result, is_slideshow = desplice.process(video_frames, mode='heal', show=True, sh
 
 If ```show``` is set to ```True``` processing and results will be displayed using ```cv2.imshow()```.
 
+If ```show_breaks``` is set to ```True``` one black frame will be inserted between each slice.
+
 If ```debug``` is set to ```True``` measurements and detections will be returned to console.
 
 ### Example of Different Modes:
