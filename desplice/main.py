@@ -154,5 +154,23 @@ class Desplice:
         if total <= len(result[1]):
             slideshow = True
         if self.debug:
-            print(f"is output a slideshow? {slideshow}")
+            clips = result[0]
+            clip_details = f""
+            for idx, clip in enumerate(clips):
+                details = f"\tclip: {idx}, with {len(clip)} frames\n"
+                clip_details += details
+            reel_details = f""
+            if not slideshow:
+                reel_details = f"clips exported: {len(result[0])}\n{clip_details}"
+                if not len(result[1]):
+                    reel_type = "uninterrupted video"
+                else:
+                    reel_type = "interrupted video"
+            else:
+                reel_type = "slideshow"
+            print(
+                f"\nREPORT:\n"
+                f"input status: {reel_type}\n{reel_details}"
+                f"images exported: {len(result[1])}\n"
+            )
         return result, slideshow
