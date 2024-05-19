@@ -23,14 +23,12 @@ Below are some examples demonstrating how to use Desplice.
 ### Importing the Library
 
 ```python
-import cv2
-import numpy as np
-from antidupe import Antidupe
 from desplice import Desplice
-from PIL import Image
 ```
 
 ### Loading a Video and Processing it
+
+Take note that in the input value may be a path to the target video or alternatively a list of frames ```list[np.ndarray]``` that has already been captured/loaded.
 
 ```python
 # Initialize the Desplice class
